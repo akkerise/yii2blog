@@ -36,7 +36,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['icon', 'parent_id', 'keywords', 'description', 'order', 'group_id', 'created_at', 'updated_at'], 'required', 'message' => '{attribute} không được để trống !'],
-            [['parent_id', 'group_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['parent_id', 'group_id', 'status'], 'integer'],
             [['description'], 'string'],
             [['icon', 'keywords', 'order'], 'string', 'max' => 255],
         ];

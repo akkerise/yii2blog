@@ -40,18 +40,18 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        
+
         'urlManager' => [
             'baseUrl' => $baseUrl,
-            'enablePrettyUrl' => true, 
-            'showScriptName' => false, 
-            'enableStrictParsing' => false, 
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
             'suffix' => '',
             'rules' => [
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>'
             ]
         ],
-        
+
     ],
     'params' => $params,
 ];

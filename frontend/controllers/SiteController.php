@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\controllers;
 
 use Yii;
@@ -72,7 +73,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('index', [
+            'name' => 'E-Shopper'
+        ]);
     }
 
     /**
@@ -82,11 +85,13 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout = 'login';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
@@ -148,6 +153,7 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
+        $this->layout = 'signup';
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
@@ -157,7 +163,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('signup', [
+        return $this->render('signupold', [
             'model' => $model,
         ]);
     }

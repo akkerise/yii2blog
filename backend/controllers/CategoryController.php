@@ -14,14 +14,12 @@ use yii\helpers\ArrayHelper;
 /**
  * CategoryController implements the CRUD actions for Category model.
  */
-class CategoryController extends Controller
-{
+class CategoryController extends Controller {
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -36,14 +34,13 @@ class CategoryController extends Controller
      * Lists all Category models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -52,10 +49,10 @@ class CategoryController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
+            
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -64,25 +61,28 @@ class CategoryController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
 
         $groups = new Group();
         $dataGroups = ArrayHelper::map($groups->getAllGroup(), 'id', 'group_name');
         $model = new Category();
-        $dataCategorys = $model->getCategoryParent();
-        $model->created_at = time();
-        $model->updated_at = time();
-        if (empty($dataCategorys)) {
-            $dataCategorys = [];
+        $dataCategories = $model->getCategoryParent();
+           
+//        $model->created_at = time();
+//        $model->updated_at = time();
+
+        if (empty($dataCategories)) {
+            $dataCategories = [];
         }
+        
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
-                'dataGroups' => $dataGroups,
-                'dataCategorys' => $dataCategorys
+                        'model' => $model,
+                        'dataGroups' => $dataGroups,
+                        'dataCategories' => $dataCategories
             ]);
         }
     }
@@ -93,15 +93,27 @@ class CategoryController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionUpdate($id) {
+        $model = new Category();
+        $dataCategories = $model->getCategoryParent();
+        
 
+        if (empty($dataCategories)) {
+            $dataCategories = [];
+        }
+        
+        $model = $this->findModel($id);
+        
+        $groups = new Group();
+        $dataGroups = ArrayHelper::map($groups->getAllGroup(), 'id', 'group_name');
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
+                        'dataGroups' => $dataGroups,
+                        'dataCategories' => $dataCategories
             ]);
         }
     }
@@ -112,8 +124,7 @@ class CategoryController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -126,8 +137,7 @@ class CategoryController extends Controller
      * @return Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Category::findOne($id)) !== null) {
             return $model;
         } else {

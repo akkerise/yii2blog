@@ -20,7 +20,8 @@ class AppAsset extends AssetBundle
         'vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css',
         'vendors/jqvmap/dist/jqvmap.min.css',
         'vendors/bootstrap-daterangepicker/daterangepicker.css',
-        'build/css/custom.min.css'
+        'build/css/custom.min.css',
+        'css/jquery-ui.css'
     ];
     public $js = [
         'vendors/jquery/dist/jquery.min.js',
@@ -46,7 +47,10 @@ class AppAsset extends AssetBundle
         'vendors/jqvmap/examples/js/jquery.vmap.sampledata.js',
         'vendors/moment/min/moment.min.js',
         'vendors/bootstrap-daterangepicker/daterangepicker.js',
-        'build/js/custom.min.js'
+        'build/js/custom.min.js',
+        'js/jquery-ui.js',
+        'js/main.js',
+        'tinymce/js/tinymce/jquery.tinymce.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

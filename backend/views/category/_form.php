@@ -14,16 +14,20 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'category_name')->textInput() ?>
-
-    <?= $form->field($model, 'parent_id')->dropDownList($dataCategorys, ['prompt', '-Chọn danh mục-']) ?>
+    
+    <?= $form->field($model, 'parent_id')->dropDownList($dataCategories, ['prompt', '-Chọn danh mục-']) ?>
 
     <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 6, 'id' => 'content']) ?>
 
     <?= $form->field($model, 'order')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'group_id')->dropDownList($dataGroups, ['prompt', '-Chọn danh mục-']) ?>
+
+    <?= $form->field($model, 'created_at')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'updated_at')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->checkbox() ?>
 

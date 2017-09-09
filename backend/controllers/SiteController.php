@@ -13,6 +13,7 @@ use yii\helpers\Url;
  * Site controller
  */
 class SiteController extends Controller {
+
     /**
      * @inheritdoc
      */

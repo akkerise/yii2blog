@@ -1,7 +1,10 @@
 <?php
-/* @var $this \yii\web\View */
-
-/* @var $content string */
+/**
+ * Created by PhpStorm.
+ * User: akke
+ * Date: 09/09/2017
+ * Time: 11:03
+ */
 
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -15,7 +18,6 @@ use frontend\views\widgets\FooterWidget;
 use frontend\views\widgets\LeftSidebarWidget;
 use frontend\views\widgets\HeaderTopWidget;
 use frontend\views\widgets\HeaderMiddleWidget;
-use frontend\views\widgets\HeaderBottomWidget;
 
 AppAsset::register($this);
 ?>
@@ -28,13 +30,13 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link rel="shortcut icon" href="<?= Yii::$app->homeUrl . 'frontend/' ?>web/images/ico/favicon.ico">
+    <link rel="shortcut icon" href="../web/images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144"
-          href="<?= Yii::$app->homeUrl . 'frontend/' ?>web/images/ico/apple-touch-icon-144-precomposed.png">
+          href="../web/images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114"
-          href="<?= Yii::$app->homeUrl . 'frontend/' ?>web/images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?= Yii::$app->homeUrl . 'frontend/' ?>web/images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="<?= Yii::$app->homeUrl . 'frontend/' ?>web/images/ico/apple-touch-icon-57-precomposed.png">
+          href="../web/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../web/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../web/images/ico/apple-touch-icon-57-precomposed.png">
     <?php $this->head() ?>
 </head>
 <body>
@@ -46,20 +48,15 @@ AppAsset::register($this);
 
     <?= HeaderMiddleWidget::widget() ?>
 
-    <?= HeaderBottomWidget::widget() ?>
-
 </header><!--/header-->
-
-<?= SliderWidget::widget() ?>
 
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">
-                <?= LeftSidebarWidget::widget() ?>
+            <div class="col-sm-4">
             </div>
 
-            <div class="col-sm-9 padding-right">
+            <div class="col-sm-8 padding-right">
                 <?= $content ?>
             </div>
         </div>
