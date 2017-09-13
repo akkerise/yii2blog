@@ -1,0 +1,10 @@
+dependencies:
+  jquery-ui: 1.12.1
+packages:
+  /jquery-ui/1.12.1:
+    resolution:
+      integrity: sha1-vLQEXI3QU5wTS8FIjN0+dop6nlE=
+registry: 'https://registry.npmjs.org/'
+shrinkwrapVersion: 3
+specifiers:
+  jquery-ui: ^1.12.1
