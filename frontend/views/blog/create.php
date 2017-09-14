@@ -12,12 +12,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="blog-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="col-md-offset-3"><h1><?= Html::encode($this->title) ?></h1></div>
 
     <?= $this->render('_form', [
         'model' => $model,
-        'dataTag' => $dataTag,
-        'dataUser' => $dataUser
+        'tagGroup' => $tagGroup,
+        'userGroup' => $userGroup
     ]) ?>
 
 </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
@@ -18,7 +18,7 @@ class ImageSearch extends Image
     public function rules()
     {
         return [
-            [['id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'blog_id', 'created_at', 'updated_at'], 'integer'],
             [['image_name', 'image_src'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class ImageSearch extends Image
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'blog_id' => $this->blog_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

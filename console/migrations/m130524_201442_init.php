@@ -150,6 +150,7 @@ class m130524_201442_init extends Migration
             'id' => $this->primaryKey(),
             'image_name' => $this->string()->notNull(),
             'image_src' => $this->string()->notNull(),
+            'blog_id' => $this->integer()->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
@@ -157,10 +158,9 @@ class m130524_201442_init extends Migration
         $this->createTable('{{%blogs}}', [
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
-            'content' => $this->string()->notNull(),
+            'content' => $this->text()->notNull(),
             'keyword' => $this->string()->notNull(),
             'description' => $this->text()->notNull(),
-            'image_id' => $this->string()->notNull(),
             'tag_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->notNull(),
             'created_at' => $this->integer()->notNull(),
@@ -174,6 +174,8 @@ class m130524_201442_init extends Migration
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
 
+
+        // Add Foreign Key
         $this->addForeignKey('FK_PRODUCTS_CATEGORY', 'products', 'category_id', 'categories', 'id');
         $this->addForeignKey('FK_PRODUCTS_BRAND', 'products', 'brand_id', 'brands', 'id');
         $this->addForeignKey('FK_PRODUCTS_SIZE', 'products', 'size_id', 'sizes', 'id');

@@ -11,6 +11,7 @@ namespace frontend\views\widgets;
 
 use yii\base\Widget;
 use yii\helpers\Html;
+use app\models\Category;
 
 class LeftSidebarWidget extends Widget
 {
@@ -23,6 +24,10 @@ class LeftSidebarWidget extends Widget
 
     public function run()
     {
-        return $this->render('LeftSidebarWidget');
+    	$categories = new Category;
+    	$dataCategories = $categories->getCategoriesByParentID(0);
+        return $this->render('LeftSidebarWidget', [
+        	'dataCategories' => $dataCategories
+        ]);
     }
 }

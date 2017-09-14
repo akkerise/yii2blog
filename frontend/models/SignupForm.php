@@ -3,6 +3,7 @@ namespace frontend\models;
 
 use yii\base\Model;
 use common\models\User;
+use Yii;
 
 /**
  * Signup form
@@ -38,6 +39,9 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+
+            ['avatar', 'required'],
+            ['avatar', 'string', 'max' => 255],
         ];
     }
 
@@ -57,6 +61,7 @@ class SignupForm extends Model
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
+        $user->avatar = Yii::getAlias('@webroot') . '/uploads/logo.jpg';
         
         return $user->save() ? $user : null;
     }

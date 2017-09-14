@@ -37,9 +37,9 @@ class Blog extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'content', 'keyword', 'description', 'tag_id', 'user_id', 'created_at', 'updated_at'], 'required'],
-            [['description'], 'string'],
+            [['content'], 'string'],
             [['tag_id', 'user_id', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'content', 'keyword'], 'string', 'max' => 255],
+            [['title', 'keyword', 'description'], 'string', 'max' => 255],
             [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tag::className(), 'targetAttribute' => ['tag_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -68,7 +68,7 @@ class Blog extends \yii\db\ActiveRecord
      */
     public function getTag()
     {
-        return $this->hasOne(Tag::className(), ['id' => 'tag_id']);
+        return $this->hasOne(Tags::className(), ['id' => 'tag_id']);
     }
 
     /**
@@ -76,6 +76,6 @@ class Blog extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(Users::className(), ['id' => 'user_id']);
     }
 }

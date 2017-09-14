@@ -1,28 +1,44 @@
+<?php
+use app\models\Category;
+
+?>
+
 <div class="left-sidebar">
     <h2>Category</h2>
     <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                        Sportswear
-                    </a>
-                </h4>
-            </div>
-            <div id="sportswear" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <ul>
-                        <li><a href="#">Nike </a></li>
-                        <li><a href="#">Under Armour </a></li>
-                        <li><a href="#">Adidas </a></li>
-                        <li><a href="#">Puma</a></li>
-                        <li><a href="#">ASICS </a></li>
-                    </ul>
+
+        <?php foreach ($dataCategories as $k => $v) { ?>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordian" href="#<?= $v['keywords'] ?>">
+                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                            <?= $v['category_name'] ?>
+                        </a>
+                    </h4>
+                </div>
+
+                <div id="<?= $v['keywords'] ?>" class="panel-collapse collapse">
+                    <?php 
+                        $dataSub = new Category();
+                        $dataSub = $dataSub->getCategoriesByParentID($v['id']);
+                        if($dataSub){
+                     ?>
+                     <div class="panel-body">
+                        <ul>
+                            <?php foreach ($dataSub as $key => $value) { ?>
+                                    <li><a href=""><?= $value['category_name'] ?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                    <?php } ?>
                 </div>
             </div>
-        </div>
-        <div class="panel panel-default">
+
+        <?php } ?>
+
+       <!--  <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordian" href="#mens">
@@ -104,7 +120,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title"><a href="#">Shoes</a></h4>
             </div>
-        </div>
+        </div> -->
     </div><!--/category-products-->
 
     <div class="brands_products"><!--brands_products-->

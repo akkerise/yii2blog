@@ -5,9 +5,11 @@ namespace frontend\controllers;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -64,10 +66,32 @@ class UserController extends Controller
     public function actionCreate()
     {
 
-        $this->layout = 'signup';
+        $this->layout = 'user';
         $model = new User();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            try {
+                // Get the instance of the uploaded file
+                $avatarName = trim($model->username);
+                $model->file = UploadedFile::getInstance($model, 'file');
+                $model->file->saveAs(Yii::getAlias('@webroot') . '/uploads/' . $avatarName . '.' . $model->file->extension);
+
+                // Save the path in the db column
+                $model->status = 0;
+                $model->avatar = Yii::getAlias('@webroot') . '/uploads/' . $avatarName . '.' . $model->file->extension;
+                $model->created_at = time();
+                $model->updated_at = time();
+                $model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash);
+                $model->auth_key = Yii::$app->security->generateRandomString();
+                $model->save();
+            } catch (Exception $e) {
+                echo "<pre>";
+                var_dump($e->getMessage());
+                echo "</pre>";
+                die();
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -84,9 +108,22 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
+        $this->layout = 'user';
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            // Get the instance of the uploaded file
+            $avatarName = trim($model->username);
+            $model->file = UploadedFile::getInstance($model, 'file');
+            $model->file->saveAs(Yii::getAlias('@webroot') . '/uploads/' . $avatarName . '.' . $model->file->extension);
+
+            // Save the path in the db column
+            $model->status = 0;
+            $model->avatar = Yii::getAlias('@webroot') . '/uploads/' . $avatarName . '.' . $model->file->extension;
+            $model->updated_at = time();
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

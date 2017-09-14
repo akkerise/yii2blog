@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\Image;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Image */
@@ -11,14 +10,20 @@ use app\models\Image;
 
 <div class="image-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'image_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'image_src')->fileInput()->label(false) ?>
+    <?= $form->field($model, 'image_src')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'blog_id')->textInput() ?>
+
+    <?= $form->field($model, 'created_at')->textInput() ?>
+
+    <?= $form->field($model, 'updated_at')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Upload' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

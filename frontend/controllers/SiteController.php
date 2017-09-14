@@ -158,13 +158,9 @@ class SiteController extends Controller
         $this->layout = 'signup';
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
+
             if ($user = $model->signup()) {
                 $this->actionLogout();
-
-//                if (Yii::$app->getUser()->login($user)) {
-//                    return $this->goHome();
-//                }
-
                 Yii::$app->user->logout();
                 return $this->goHome();
             }

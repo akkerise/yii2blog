@@ -24,6 +24,8 @@ class Category extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $file;
+
     public static function tableName()
     {
         return 'categories';
@@ -38,6 +40,7 @@ class Category extends \yii\db\ActiveRecord
             [['icon', 'category_name', 'keywords', 'description', 'created_at', 'updated_at'], 'required'],
             [['parent_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['description'], 'string'],
+            [['file'], 'file'],
             [['icon', 'category_name', 'keywords'], 'string', 'max' => 255],
         ];
     }
@@ -49,14 +52,11 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'icon' => 'Icon',
+            'file' => 'Icon',
             'category_name' => 'Category Name',
             'parent_id' => 'Parent ID',
             'keywords' => 'Keywords',
-            'description' => 'Description',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'description' => 'Description'
         ];
     }
 
@@ -66,5 +66,10 @@ class Category extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Products::className(), ['category_id' => 'id']);
+    }
+
+    public function getCategoriesByParentID($parentid = 0){
+        $data = Category::find()->asArray()->where('parent_id=:parentid',['parentid' => $parentid])->all();
+        return $data;
     }
 }

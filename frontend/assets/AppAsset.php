@@ -19,6 +19,7 @@ class AppAsset extends AssetBundle
         'css/animate.css',
         'css/main.css',
         'css/responsive.css',
+        'css/site.css'
 
     ];
     public $js = [
@@ -29,6 +30,9 @@ class AppAsset extends AssetBundle
         'js/jquery.scrollUp.min.js',
         'js/price-range.js',
         'js/jquery.prettyPhoto.js',
+        'js/jquery-ui.js',
+        'tinymce/js/tinymce/tinymce.min.js',
+        'tinymce/js/tinymce/jquery.tinymce.min.js',
         'js/main.js',
     ];
     public $depends = [

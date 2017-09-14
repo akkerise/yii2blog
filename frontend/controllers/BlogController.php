@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+
 use Yii;
 use app\models\Blog;
 use app\models\BlogSearch;
@@ -10,6 +11,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Tag;
 use app\models\User;
+use app\models\Image;
+use yii\helpers\ArrayHelper;
+
 
 /**
  * BlogController implements the CRUD actions for Blog model.
@@ -37,13 +41,16 @@ class BlogController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout = 'blog';
+//        $userGroup = ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username');
+//        $tagGroup = ArrayHelper::map(Tag::find()->asArray()->all(), 'id', 'tag_name');
+
         $searchModel = new BlogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+
         ]);
     }
 
@@ -54,6 +61,7 @@ class BlogController extends Controller
      */
     public function actionView($id)
     {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -67,18 +75,20 @@ class BlogController extends Controller
     public function actionCreate()
     {
         $this->layout = 'blog';
-
-        $dataTag = Tag::find()->orderBy('id')->all();
-        $dataUser = User::find()->orderBy('id')->all();
+        $userGroup = ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username');
+        $tagGroup = ArrayHelper::map(Tag::find()->asArray()->all(), 'id', 'tag_name');
 
         $model = new Blog();
+
+        $image = new Image();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'dataTag' => $dataTag,
-                'dataUser' => $dataUser
+                'userGroup' => $userGroup,
+                'tagGroup' => $tagGroup
             ]);
         }
     }
