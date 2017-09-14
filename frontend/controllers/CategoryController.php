@@ -189,4 +189,12 @@ class CategoryController extends Controller
         $str = preg_replace("/(Đ)/", 'D', $str);
         return $str;
     }
+
+    public function actionListbycateid($id)
+    {
+        echo $id;die();
+        // $this->render('list-cate-id', [
+        //     'id' => $id
+        //     ]);
+    }
 }

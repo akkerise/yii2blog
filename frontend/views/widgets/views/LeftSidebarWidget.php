@@ -7,13 +7,18 @@ use app\models\Brand;
     <h2>Category</h2>
     <div class="panel-group category-products" id="accordian"><!--category-productsr-->
 
-        <?php foreach ($dataCategories as $k => $v) { ?>
+        <?php foreach ($dataCategories as $k => $v) { 
+                    $dataSub = new Category();
+                    $dataSub = $dataSub->getCategoriesByParentID($v['id']);
+        ?>
 
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordian" href="#<?= $v['keywords'] ?>">
-                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                            <?php if($dataSub){ ?>
+                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                            <?php } ?>
                             <?= $v['category_name'] ?>
                         </a>
                     </h4>
@@ -21,14 +26,12 @@ use app\models\Brand;
 
                 <div id="<?= $v['keywords'] ?>" class="panel-collapse collapse">
                     <?php 
-                        $dataSub = new Category();
-                        $dataSub = $dataSub->getCategoriesByParentID($v['id']);
                         if($dataSub){
                      ?>
                      <div class="panel-body">
                         <ul>
                             <?php foreach ($dataSub as $key => $value) { ?>
-                                    <li><a href=""><?= $value['category_name'] ?></a></li>
+                                    <li><a href="<?= Yii::$app->homeUrl . 'category/listbycateid/' . $value['id'] ?>"><?= $value['category_name'] ?></a></li>
                             <?php } ?>
                         </ul>
                     </div>
