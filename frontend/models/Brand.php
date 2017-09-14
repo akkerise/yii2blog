@@ -33,8 +33,8 @@ class Brand extends \yii\db\ActiveRecord
     {
         return [
             [['brand_name', 'brand_phone_number', 'brand_address', 'created_at', 'updated_at'], 'required'],
-            [['brand_phone_number', 'created_at', 'updated_at'], 'integer'],
-            [['brand_name', 'brand_address'], 'string', 'max' => 255],
+            [[ 'created_at', 'updated_at'], 'integer'],
+            [['brand_name', 'brand_phone_number',  'brand_address'], 'string', 'max' => 255],
         ];
     }
 
@@ -59,5 +59,10 @@ class Brand extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Products::className(), ['brand_id' => 'id']);
+    }
+
+    public function getAllBrands()
+    {
+        return Brand::find()->asArray()->all();
     }
 }

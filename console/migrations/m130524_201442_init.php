@@ -41,7 +41,7 @@ class m130524_201442_init extends Migration
         $this->createTable('{{%brands}}', [
             'id' => $this->primaryKey(),
             'brand_name' => $this->string()->notNull(),
-            'brand_phone_number' => $this->integer()->notNull(),
+            'brand_phone_number' => $this->string()->notNull(),
             'brand_address' => $this->string()->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),

@@ -32,8 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'brand_name',
             'brand_phone_number',
             'brand_address',
-            'created_at',
-            'updated_at',
+            // 'created_at',
+            // 'updated_at',
         ],
     ]) ?>
 

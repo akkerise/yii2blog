@@ -13,8 +13,16 @@ return [
     'controllerNamespace' => 'console\controllers',
     'controllerMap' => [
         'fixture' => [
-            'class' => 'yii\console\controllers\FixtureController',
+            'class' => [
+                'yii\console\controllers\FixtureController',
+                'yii\faker\FixtureController'
+            ],
+            'providers' => [
+                'app\tests\unit\faker\providers\Book',
+            ],
             'namespace' => 'common\fixtures',
+            'templatePath' => '@common/tests/templates/fixtures',
+            'fixtureDataPath' => '@common/tests/fixtures/data',
           ],
     ],
     'components' => [

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace frontend\controllers;
 
 use Yii;
 use app\models\Brand;
@@ -8,6 +8,7 @@ use app\models\BrandSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\VarDumper;
 
 /**
  * BrandController implements the CRUD actions for Brand model.
@@ -64,7 +65,9 @@ class BrandController extends Controller
     public function actionCreate()
     {
         $model = new Brand();
-
+        $model->created_at = time();
+        $model->updated_at = time();
+        VarDumper::dump($model);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

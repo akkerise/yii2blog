@@ -12,6 +12,8 @@ namespace frontend\views\widgets;
 use yii\base\Widget;
 use yii\helpers\Html;
 use app\models\Category;
+use app\models\Brand;
+use yii\helpers\VarDumper;
 
 class LeftSidebarWidget extends Widget
 {
@@ -26,8 +28,12 @@ class LeftSidebarWidget extends Widget
     {
     	$categories = new Category;
     	$dataCategories = $categories->getCategoriesByParentID(0);
+        $brands = new Brand;
+        $dataBrands = $brands->getAllBrands();
+
         return $this->render('LeftSidebarWidget', [
-        	'dataCategories' => $dataCategories
+        	'dataCategories' => $dataCategories,
+            'dataBrands' => $dataBrands
         ]);
     }
 }
