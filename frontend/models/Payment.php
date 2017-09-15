@@ -56,6 +56,6 @@ class Payment extends \yii\db\ActiveRecord
      */
     public function getOrders()
     {
-        return $this->hasMany(Orders::className(), ['payment_id' => 'id']);
+        return $this->hasMany(Order::className(), ['payment_id' => 'id']);
     }
 }

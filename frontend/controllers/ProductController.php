@@ -122,11 +122,4 @@ class ProductController extends Controller
         }
     }
 
-    public function actionListbycateid()
-    {
-        var_dump(1);die();
-        // $this->render('list-cate-id', [
-        //     'id' => $id
-        //     ]);
-    }
 }

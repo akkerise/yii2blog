@@ -56,6 +56,6 @@ class Size extends \yii\db\ActiveRecord
      */
     public function getProducts()
     {
-        return $this->hasMany(Products::className(), ['size_id' => 'id']);
+        return $this->hasMany(Product::className(), ['size_id' => 'id']);
     }
 }

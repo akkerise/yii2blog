@@ -54,6 +54,6 @@ class Tag extends \yii\db\ActiveRecord
      */
     public function getBlogs()
     {
-        return $this->hasMany(Blogs::className(), ['tag_id' => 'id']);
+        return $this->hasMany(Blog::className(), ['tag_id' => 'id']);
     }
 }

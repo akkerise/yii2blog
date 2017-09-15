@@ -58,7 +58,7 @@ class Brand extends \yii\db\ActiveRecord
      */
     public function getProducts()
     {
-        return $this->hasMany(Products::className(), ['brand_id' => 'id']);
+        return $this->hasMany(Product::className(), ['brand_id' => 'id']);
     }
 
     public function getAllBrands()

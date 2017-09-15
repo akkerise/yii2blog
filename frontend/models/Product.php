@@ -97,7 +97,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getOrderDetails()
     {
-        return $this->hasMany(OrderDetails::className(), ['product_id' => 'id']);
+        return $this->hasMany(OrderDetail::className(), ['product_id' => 'id']);
     }
 
     /**
@@ -105,7 +105,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getBrand()
     {
-        return $this->hasOne(Brands::className(), ['id' => 'brand_id']);
+        return $this->hasOne(Brand::className(), ['id' => 'brand_id']);
     }
 
     /**
@@ -113,7 +113,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne(Categories::className(), ['id' => 'category_id']);
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
     /**
@@ -121,7 +121,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getColor()
     {
-        return $this->hasOne(Colors::className(), ['id' => 'color_id']);
+        return $this->hasOne(Color::className(), ['id' => 'color_id']);
     }
 
     /**
@@ -129,7 +129,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getMaterial()
     {
-        return $this->hasOne(Materials::className(), ['id' => 'material_id']);
+        return $this->hasOne(Material::className(), ['id' => 'material_id']);
     }
 
     /**
@@ -137,7 +137,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getRate()
     {
-        return $this->hasOne(Rates::className(), ['id' => 'rate_id']);
+        return $this->hasOne(Rate::className(), ['id' => 'rate_id']);
     }
 
     /**
@@ -145,6 +145,6 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getSize()
     {
-        return $this->hasOne(Sizes::className(), ['id' => 'size_id']);
+        return $this->hasOne(Size::className(), ['id' => 'size_id']);
     }
 }

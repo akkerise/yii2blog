@@ -81,7 +81,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getBlogs()
     {
-        return $this->hasMany(Blogs::className(), ['user_id' => 'id']);
+        return $this->hasMany(Blog::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -89,7 +89,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getOrders()
     {
-        return $this->hasMany(Orders::className(), ['user_id' => 'id']);
+        return $this->hasMany(Order::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -97,6 +97,6 @@ class User extends \yii\db\ActiveRecord
      */
     public function getRates()
     {
-        return $this->hasMany(Rates::className(), ['user_id' => 'id']);
+        return $this->hasMany(Rate::className(), ['user_id' => 'id']);
     }
 }

@@ -34,7 +34,7 @@ class Rate extends \yii\db\ActiveRecord
         return [
             [['user_id', 'star', 'created_at', 'updated_at'], 'required'],
             [['user_id', 'star', 'created_at', 'updated_at'], 'integer'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -57,7 +57,7 @@ class Rate extends \yii\db\ActiveRecord
      */
     public function getProducts()
     {
-        return $this->hasMany(Products::className(), ['rate_id' => 'id']);
+        return $this->hasMany(Product::className(), ['rate_id' => 'id']);
     }
 
     /**
@@ -65,6 +65,6 @@ class Rate extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

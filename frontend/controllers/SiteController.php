@@ -27,18 +27,25 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'contact', 'index'],
                 'rules' => [
+                     // allow authenticated users
                     [
                         'actions' => ['signup'],
-                        'allow' => true,
+                        'allow' => false,
                         'roles' => ['?'],
                     ],
                     [
                         'actions' => ['logout'],
-                        'allow' => true,
+                        'allow' => false,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['contact'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    // everything else is denied by default
                 ],
             ],
             'verbs' => [
@@ -110,6 +117,7 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        var_dump(1);die();
         Yii::$app->user->logout();
 
         return $this->goHome();

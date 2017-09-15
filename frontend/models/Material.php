@@ -56,6 +56,6 @@ class Material extends \yii\db\ActiveRecord
      */
     public function getProducts()
     {
-        return $this->hasMany(Products::className(), ['material_id' => 'id']);
+        return $this->hasMany(Product::className(), ['material_id' => 'id']);
     }
 }

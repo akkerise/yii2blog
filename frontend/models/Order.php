@@ -47,9 +47,9 @@ class Order extends \yii\db\ActiveRecord
             [['user_id', 'username', 'email', 'phone_number', 'address', 'payment_id', 'delivery_id', 'username_shipper', 'email_shipper', 'phone_number_shipper', 'address_shipper', 'request', 'created_at', 'updated_at'], 'required'],
             [['user_id', 'payment_id', 'delivery_id', 'created_at', 'updated_at'], 'integer'],
             [['username', 'email', 'phone_number', 'address', 'username_shipper', 'email_shipper', 'phone_number_shipper', 'address_shipper', 'request'], 'string', 'max' => 255],
-            [['delivery_id'], 'exist', 'skipOnError' => true, 'targetClass' => Deliveries::className(), 'targetAttribute' => ['delivery_id' => 'id']],
-            [['payment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payments::className(), 'targetAttribute' => ['payment_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['delivery_id'], 'exist', 'skipOnError' => true, 'targetClass' => Delivery::className(), 'targetAttribute' => ['delivery_id' => 'id']],
+            [['payment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payment::className(), 'targetAttribute' => ['payment_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -82,7 +82,7 @@ class Order extends \yii\db\ActiveRecord
      */
     public function getOrderDetails()
     {
-        return $this->hasMany(OrderDetails::className(), ['order_id' => 'id']);
+        return $this->hasMany(OrderDetail::className(), ['order_id' => 'id']);
     }
 
     /**
@@ -90,7 +90,7 @@ class Order extends \yii\db\ActiveRecord
      */
     public function getDelivery()
     {
-        return $this->hasOne(Deliveries::className(), ['id' => 'delivery_id']);
+        return $this->hasOne(Delivery::className(), ['id' => 'delivery_id']);
     }
 
     /**
@@ -98,7 +98,7 @@ class Order extends \yii\db\ActiveRecord
      */
     public function getPayment()
     {
-        return $this->hasOne(Payments::className(), ['id' => 'payment_id']);
+        return $this->hasOne(Payment::className(), ['id' => 'payment_id']);
     }
 
     /**
@@ -106,6 +106,6 @@ class Order extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }
