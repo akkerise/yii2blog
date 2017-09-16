@@ -61,6 +61,7 @@ class Product extends \yii\db\ActiveRecord
             [['material_id'], 'exist', 'skipOnError' => true, 'targetClass' => Material::className(), 'targetAttribute' => ['material_id' => 'id']],
             [['rate_id'], 'exist', 'skipOnError' => true, 'targetClass' => Rate::className(), 'targetAttribute' => ['rate_id' => 'id']],
             [['size_id'], 'exist', 'skipOnError' => true, 'targetClass' => Size::className(), 'targetAttribute' => ['size_id' => 'id']],
+            [['comment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comment::className(), 'targetAttribute' => ['comment_id' => 'id']],
         ];
     }
 
@@ -84,6 +85,7 @@ class Product extends \yii\db\ActiveRecord
             'color_id' => 'Color ID',
             'material_id' => 'Material ID',
             'rate_id' => 'Rate ID',
+            'comment_id' => 'Comment ID',
             'status' => 'Status',
             'keyword' => 'Keyword',
             'description' => 'Description',
@@ -146,5 +148,13 @@ class Product extends \yii\db\ActiveRecord
     public function getSize()
     {
         return $this->hasOne(Size::className(), ['id' => 'size_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComment()
+    {
+        return $this->hasOne(Comment::className(), ['id' => 'comment_id']);
     }
 }

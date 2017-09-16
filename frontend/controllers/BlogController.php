@@ -13,6 +13,8 @@ use app\models\Tag;
 use app\models\User;
 use app\models\Image;
 use yii\helpers\ArrayHelper;
+use common\shareds\ConvertUntils;
+
 
 
 /**
@@ -20,6 +22,9 @@ use yii\helpers\ArrayHelper;
  */
 class BlogController extends Controller
 {
+
+    public $layout = 'blog';
+
     /**
      * @inheritdoc
      */
@@ -80,8 +85,6 @@ class BlogController extends Controller
 
         $model = new Blog();
 
-        $image = new Image();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -139,5 +142,31 @@ class BlogController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionListblog()
+    {
+
+
+        if($blogs = Blog::find()->asArray()->all() !== null){
+            return  $this->render('list-blog', [
+                'blogs' => $blogs
+            ]);
+        }
+
+        return  $this->render('list-blog', [
+
+        ]);
+    }
+
+    public function actionGetblogbyid($id)
+    {
+
+        $blog = Blog::findOne($id);
+
+        return $this->render('blog-by-id', [
+            'blog' => $blog
+        ]);
+        
     }
 }

@@ -67,4 +67,12 @@ class Rate extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBlog()
+    {
+        return $this->hasMany(Blog::className(), ['rate_id' => 'id']);
+    }
 }

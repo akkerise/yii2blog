@@ -90,6 +90,8 @@ class m130524_201442_init extends Migration
         $this->createTable('{{%rates}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
+            'blog_id' => $this->integer(),
+            'product_id' => $this->integer(),
             'star' => $this->integer()->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
@@ -104,12 +106,14 @@ class m130524_201442_init extends Migration
             'product_sale_off' => $this->string(),
             'begin_date_sale_off' => $this->integer(),
             'end_date_sale_off' => $this->integer(),
+
             'category_id' => $this->integer()->notNull(),
             'brand_id' => $this->integer()->notNull(),
             'size_id' => $this->integer()->notNull(),
             'color_id' => $this->integer()->notNull(),
             'material_id' => $this->integer()->notNull(),
-            'rate_id' => $this->integer()->notNull(),
+            'tag_id' => $this->integer(),
+
             'status' => $this->smallInteger()->notNull()->defaultValue(1),
             'keyword' => $this->string()->notNull(),
             'description' => $this->text()->notNull(),
@@ -119,13 +123,15 @@ class m130524_201442_init extends Migration
 
         $this->createTable('{{%orders}}', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
             'username' => $this->string()->notNull(),
             'email' => $this->string()->notNull(),
             'phone_number' => $this->string()->notNull(),
             'address' => $this->string()->notNull(),
+
+            'user_id' => $this->integer()->notNull(),
             'payment_id' => $this->integer()->notNull(),
             'delivery_id' => $this->integer()->notNull(),
+
             'username_shipper' => $this->string()->notNull(),
             'email_shipper' => $this->string()->notNull(),
             'phone_number_shipper' => $this->string()->notNull(),
@@ -137,11 +143,13 @@ class m130524_201442_init extends Migration
 
         $this->createTable('{{%order_details}}', [
             'id' => $this->primaryKey(),
+
             'order_id' => $this->integer()->notNull(),
             'product_id' => $this->integer()->notNull(),
-            'product_price' => $this->string()->notNull(),
-            'product_quantity' => $this->string()->notNull(),
-            'status' => $this->smallInteger()->notNull()->defaultValue(1), // 1. New Order , 2. Shipping , 3. Done , 4. Destroy
+
+            'product_current_price' => $this->string()->notNull(),
+            'product_quantity' => $this->integer()->notNull(),
+            'status' => $this->integer()->notNull()->defaultValue(1), // 1. New Order , 2. Shipping , 3. Done , 4. Destroy
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
@@ -150,7 +158,11 @@ class m130524_201442_init extends Migration
             'id' => $this->primaryKey(),
             'image_name' => $this->string()->notNull(),
             'image_src' => $this->string()->notNull(),
-            'blog_id' => $this->integer()->notNull(),
+
+            'product_id' => $this->integer(),
+            'blog_id' => $this->integer(),
+            'user_id' => $this->integer(),
+
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
@@ -161,8 +173,11 @@ class m130524_201442_init extends Migration
             'content' => $this->text()->notNull(),
             'keyword' => $this->string()->notNull(),
             'description' => $this->text()->notNull(),
+
             'tag_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->notNull(),
+            'image_id' => $this->integer()->notNull(),
+
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
@@ -170,18 +185,37 @@ class m130524_201442_init extends Migration
         $this->createTable('{{%tags}}', [
             'id' => $this->primaryKey(),
             'tag_name' => $this->string()->notNull(),
+
+            'blog_id' => $this->integer(),
+            'product_id' => $this->integer(),
+
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
 
+        $this->createTable('comments', [
+            'id' => $this->primaryKey(),
+            'content' => $this->string()->notNull()->unique(),
+
+            'blog_id' => $this->integer()->notNull(),
+            'user_id' => $this->integer()->notNull(),
+
+            'parent_id' => $this->integer(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
+        ]);
 
         // Add Foreign Key
+        $this->addForeignKey('FK_RATES_USER', 'rates', 'user_id', 'users', 'id');
+        $this->addForeignKey('FK_RATES_BLOG', 'rates', 'blog_id', 'blogs', 'id');
+        $this->addForeignKey('FK_RATES_PRODUCT', 'rates', 'product_id', 'products', 'id');
+         
         $this->addForeignKey('FK_PRODUCTS_CATEGORY', 'products', 'category_id', 'categories', 'id');
         $this->addForeignKey('FK_PRODUCTS_BRAND', 'products', 'brand_id', 'brands', 'id');
         $this->addForeignKey('FK_PRODUCTS_SIZE', 'products', 'size_id', 'sizes', 'id');
         $this->addForeignKey('FK_PRODUCTS_COLOR', 'products', 'color_id', 'colors', 'id');
         $this->addForeignKey('FK_PRODUCTS_MATERIAL', 'products', 'material_id', 'materials', 'id');
-        $this->addForeignKey('FK_PRODUCTS_RATE', 'products', 'rate_id', 'rates', 'id');
+        $this->addForeignKey('FK_PRODUCTS_TAG', 'products', 'tag_id', 'tags', 'id');
 
         $this->addForeignKey('FK_ORDERS_PAYMENT', 'orders', 'payment_id', 'payments', 'id');
         $this->addForeignKey('FK_ORDERS_DELIVERY', 'orders', 'delivery_id', 'deliveries', 'id');
@@ -190,11 +224,19 @@ class m130524_201442_init extends Migration
         $this->addForeignKey('FK_ORDER_DETAILS_ORDER', 'order_details', 'order_id', 'orders', 'id');
         $this->addForeignKey('FK_ORDER_DETAILS_PRODUCT', 'order_details', 'product_id', 'products', 'id');
 
-        $this->addForeignKey('FK_RATES_USER', 'rates', 'user_id', 'users', 'id');
+        $this->addForeignKey('FK_IMAGES_PRODUCT', 'images', 'product_id', 'products', 'id');
+        $this->addForeignKey('FK_IMAGES_BLOG', 'images', 'blog_id', 'blogs', 'id');
+        $this->addForeignKey('FK_IMAGES_USER', 'images', 'user_id', 'users', 'id');
 
         $this->addForeignKey('FK_BLOGS_USER', 'blogs', 'user_id', 'users', 'id');
         $this->addForeignKey('FK_BLOGS_TAG', 'blogs', 'tag_id', 'tags', 'id');
         $this->addForeignKey('FK_BLOGS_IMAGE', 'blogs', 'image_id', 'images', 'id');
+
+        $this->addForeignKey('FK_TAGS_BLOG', 'tags', 'blog_id', 'blogs', 'id');
+        $this->addForeignKey('FK_BLOGS_PRODUCT', 'tags', 'product_id', 'products', 'id');
+
+        $this->addForeignKey('FK_COMMENTS_BLOG', 'comments', 'blog_id', 'blogs', 'id');
+        $this->addForeignKey('FK_COMMENTS_USER', 'comments', 'user_id', 'users', 'id');
 
     }
 
@@ -215,5 +257,6 @@ class m130524_201442_init extends Migration
         $this->dropTable('{{%blogs}}');
         $this->dropTable('{{%tags}}');
         $this->dropTable('{{%images}}');
+        $this->dropTable('{{%comments}}');
     }
 }
