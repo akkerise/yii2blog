@@ -27,10 +27,10 @@ class LeftSidebarWidget extends Widget
     public function run()
     {
     	$categories = new Category;
-    	$dataCategories = $categories->getCategoriesByParentID(0);
-        $brands = new Brand;
+    	$dataCategories = $categories->getCategoriesByParentID();
+        $brands = new Brand();
         $dataBrands = $brands->getAllBrands();
-
+        
         return $this->render('LeftSidebarWidget', [
         	'dataCategories' => $dataCategories,
             'dataBrands' => $dataBrands

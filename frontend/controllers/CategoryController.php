@@ -192,7 +192,7 @@ class CategoryController extends Controller
     public function actionListbycateid($id)
     {
         return  $this->render('list-by-cate-id', [
-                'id' => $id
-            ]);
+            'id' => $id
+        ]);
     }
 }

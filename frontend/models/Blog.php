@@ -40,11 +40,9 @@ class Blog extends \yii\db\ActiveRecord
             [['content'], 'string'],
             [['tag_id', 'user_id', 'created_at', 'updated_at'], 'integer'],
             [['title', 'keyword', 'description'], 'string', 'max' => 255],
+            [['file'], 'file'],
             [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tag::className(), 'targetAttribute' => ['tag_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-            [['rate_id'], 'exist', 'skipOnError' => true, 'targetClass' => Rate::className(), 'targetAttribute' => ['rate_id' => 'id']],
-            [['comment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comment::className(), 'targetAttribute' => ['comment_id' => 'id']],
-
         ];
     }
 
@@ -61,7 +59,7 @@ class Blog extends \yii\db\ActiveRecord
             'description' => 'Description',
             'tag_id' => 'Tag ID',
             'user_id' => 'User ID',
-            'comment_id' => 'Comment ID',
+            'file' => 'Image Blog',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -83,19 +81,11 @@ class Blog extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRate()
-    {
-        return $this->hasOne(Rate::className(), ['id' => 'rate_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getComment()
-    {
-        return $this->hasOne(Comment::className(), ['id' => 'comment_id']);
-    }
+//     /**
+//      * @return \yii\db\ActiveQuery
+//      */
+//     public function getImage()
+//     {
+//         return $this->hasMany(Image::className(), ['image_id' => 'id']);
+//     }
 }

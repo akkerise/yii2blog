@@ -22,6 +22,7 @@ class m130524_201442_init extends Migration
             'password_reset_token' => $this->string()->unique(),
             'email' => $this->string()->notNull()->unique(),
             'status' => $this->smallInteger()->notNull()->defaultValue(1),
+            'avatar' => $this->string(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
@@ -209,7 +210,7 @@ class m130524_201442_init extends Migration
         $this->addForeignKey('FK_RATES_USER', 'rates', 'user_id', 'users', 'id');
         $this->addForeignKey('FK_RATES_BLOG', 'rates', 'blog_id', 'blogs', 'id');
         $this->addForeignKey('FK_RATES_PRODUCT', 'rates', 'product_id', 'products', 'id');
-         
+        
         $this->addForeignKey('FK_PRODUCTS_CATEGORY', 'products', 'category_id', 'categories', 'id');
         $this->addForeignKey('FK_PRODUCTS_BRAND', 'products', 'brand_id', 'brands', 'id');
         $this->addForeignKey('FK_PRODUCTS_SIZE', 'products', 'size_id', 'sizes', 'id');

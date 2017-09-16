@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Blog */
+/* @var $model app\models\Comment */
 
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Comments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="blog-view">
+<div class="comment-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -28,15 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'title',
-            'content:ntext',
-            'keyword',
-            'description',
-            'tag_id',
-            'user_id',
-            'file'
-            // 'created_at',
-            // 'updated_at',
+            'id',
+            'content',
+            'blog_id',
+            'parent_id',
+            'created_at',
+            'updated_at',
         ],
     ]) ?>
 

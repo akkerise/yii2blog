@@ -61,7 +61,6 @@ class Product extends \yii\db\ActiveRecord
             [['material_id'], 'exist', 'skipOnError' => true, 'targetClass' => Material::className(), 'targetAttribute' => ['material_id' => 'id']],
             [['rate_id'], 'exist', 'skipOnError' => true, 'targetClass' => Rate::className(), 'targetAttribute' => ['rate_id' => 'id']],
             [['size_id'], 'exist', 'skipOnError' => true, 'targetClass' => Size::className(), 'targetAttribute' => ['size_id' => 'id']],
-            [['comment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comment::className(), 'targetAttribute' => ['comment_id' => 'id']],
         ];
     }
 
@@ -155,6 +154,6 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getComment()
     {
-        return $this->hasOne(Comment::className(), ['id' => 'comment_id']);
+        return $this->hasMany(Comment::className(), ['comment_id' => 'id']);
     }
 }
