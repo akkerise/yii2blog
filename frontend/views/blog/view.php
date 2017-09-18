@@ -34,9 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'description',
             'tag_id',
             'user_id',
-            'file'
-            // 'created_at',
-            // 'updated_at',
         ],
     ]) ?>
 

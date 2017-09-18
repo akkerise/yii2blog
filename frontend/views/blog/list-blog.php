@@ -1,12 +1,22 @@
+<?php
+use app\models\User;
+use app\models\Blog;
+use app\models\Image;
+use yii\data\Pagination;
+use yii\widgets\LinkPager;
+use yii\helpers\VarDumper;
+?>
 <div class="blog-post-area">
 	<h2 class="title text-center">Latest From our Blog</h2>
+
+	<?php foreach ($blogs as $k => $v) { ?>
 	<div class="single-blog-post">
-		<h3>Girls Pink T Shirt arrived in store</h3>
+		<h3><?= $v['title'] ?></h3>
 		<div class="post-meta">
 			<ul>
-				<li><i class="fa fa-user"></i> Mac Doe</li>
-				<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-				<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
+				<li><i class="fa fa-user"></i> <?= User::find()->where(['id' => $v['user_id']])->asArray()->one()['full_name'] ?></li>
+				<li><i class="fa fa-clock-o"></i> <?= Yii::$app->formatter->asTime($v['created_at']) ?></li>
+				<li><i class="fa fa-calendar"></i> <?= Yii::$app->formatter->asDate($v['created_at'], 'long') ?></li>
 			</ul>
 			<span>
 				<i class="fa fa-star"></i>
@@ -16,62 +26,31 @@
 				<i class="fa fa-star-half-o"></i>
 			</span>
 		</div>
-		<a href="">
-			<img src="<?= Yii::$app->homeUrl . 'frontend/web/' ?>images/blog/blog-one.jpg" alt="">
+
+		<a href="<?= Yii::$app->homeUrl . 'blog/getblogbyid/' . $v['id'] ?>">
+			<?php
+				$imgBlogById = Image::find()->where(['blog_id' => $v['id']])->asArray()->one();
+			 ?>
+			<img src="<?= str_replace('/var/www/html', '', $imgBlogById['image_src']) ?>" alt="">
 		</a>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-		<a  class="btn btn-primary" href="">Read More</a>
+
+		<?= substr(strip_tags(($v['content'])), 0, 1000) . '...'?>
+		<a  class="btn btn-primary" href="<?= Yii::$app->homeUrl . 'blog/getblogbyid/' . $v['id'] ?>">Read More</a>
 	</div>
-	<div class="single-blog-post">
-		<h3>Girls Pink T Shirt arrived in store</h3>
-		<div class="post-meta">
-			<ul>
-				<li><i class="fa fa-user"></i> Mac Doe</li>
-				<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-				<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-			</ul>
-			<span>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star-half-o"></i>
-			</span>
-		</div>
-		<a href="">
-			<img src="<?= Yii::$app->homeUrl . 'frontend/web/' ?>images/blog/blog-two.jpg" alt="">
-		</a>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-		<a  class="btn btn-primary" href="">Read More</a>
-	</div>
-	<div class="single-blog-post">
-		<h3>Girls Pink T Shirt arrived in store</h3>
-		<div class="post-meta">
-			<ul>
-				<li><i class="fa fa-user"></i> Mac Doe</li>
-				<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-				<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-			</ul>
-			<span>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star-half-o"></i>
-			</span>
-		</div>
-		<a href="">
-			<img src="<?= Yii::$app->homeUrl . 'frontend/web/' ?>images/blog/blog-three.jpg" alt="">
-		</a>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-		<a  class="btn btn-primary" href="">Read More</a>
-	</div>
-	<div class="pagination-area">
+	<?php } ?>
+	
+	<!-- <div class="pagination-area">
 		<ul class="pagination">
 			<li><a href="" class="active">1</a></li>
 			<li><a href="">2</a></li>
 			<li><a href="">3</a></li>
 			<li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
 		</ul>
-	</div>
+	</div> -->
+
+	<?php 
+		echo LinkPager::widget([
+			'pagination' => $pages,
+		]);
+	?>
 </div>

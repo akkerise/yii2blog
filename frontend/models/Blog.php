@@ -22,6 +22,8 @@ use Yii;
  */
 class Blog extends \yii\db\ActiveRecord
 {
+    public $file;
+
     /**
      * @inheritdoc
      */

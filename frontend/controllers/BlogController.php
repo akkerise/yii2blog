@@ -15,8 +15,8 @@ use app\models\Image;
 use yii\helpers\ArrayHelper;
 use common\shareds\ConvertUntils;
 use yii\helpers\VarDumper;
-
-
+use yii\web\UploadedFile;
+use yii\data\Pagination;
 
 /**
  * BlogController implements the CRUD actions for Blog model.
@@ -80,15 +80,32 @@ class BlogController extends Controller
     {
         $userGroup = ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username');
         $tagGroup = ArrayHelper::map(Tag::find()->asArray()->all(), 'id', 'tag_name');
+
         $model = new Blog();
         if ($model->load(Yii::$app->request->post())) {
+            $blogImageName = ConvertUntils::renameStringForImageName($model->title);
+
+            $model->file = UploadedFile::getInstance($model, 'file');
+            $model->file->saveAs(Yii::getAlias('@webroot') . '/uploads/blogs/' . $blogImageName . '.' . $model->file->extension);
+
+            $model->created_at = time();
+            $model->updated_at = time();
             $model->save();
+            $image = new Image();
+            $image->image_name = $blogImageName;
+            $image->image_src = Yii::getAlias('@webroot') . '/uploads/blogs/' . $blogImageName . '.' . $model->file->extension;
+            $image->blog_id = $model->id;
+            $image->created_at = time();
+            $image->updated_at = time();
+            $image->save();
+
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
                 'userGroup' => $userGroup,
-                'tagGroup' => $tagGroup
+                'tagGroup' => $tagGroup,
             ]);
         }
     }
@@ -101,16 +118,20 @@ class BlogController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+       $userGroup = ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username');
+       $tagGroup = ArrayHelper::map(Tag::find()->asArray()->all(), 'id', 'tag_name');
+       $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+       if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        return $this->redirect(['view', 'id' => $model->id]);
+    } else {
+        return $this->render('update', [
+            'model' => $model,
+            'userGroup' => $userGroup,
+            'tagGroup' => $tagGroup,
+        ]);
     }
+}
 
     /**
      * Deletes an existing Blog model.
@@ -143,25 +164,47 @@ class BlogController extends Controller
 
     public function actionListblog()
     {
-        if($blogs = Blog::find()->asArray()->all() !== null){
+        $blogs = Blog::find()->asArray()->all();
+
+        $pages = new Pagination(['totalCount' => count($blogs),'pageSize' => '3']);
+        $blogs = Blog::find()->asArray()->offset($pages->offset)->limit($pages->limit)->all();
+
+        
+        if($blogs !== null){
             return  $this->render('list-blog', [
-                'blogs' => $blogs
+                'blogs' => $blogs,
+                'pages' => $pages
             ]);
         }
 
-        return  $this->render('list-blog', [
-
-        ]);
     }
 
     public function actionGetblogbyid($id)
     {
 
         $blog = Blog::findOne($id);
+        if(!$blog){
+            return $this->redirect(['listblog']);
+        }
 
+        $blog_image = Image::find()->where(['blog_id' => $id])->asArray()->all();
+        $user_blog = User::find()->where(['id' => $blog['user_id']])->asArray()->one();
         return $this->render('blog-by-id', [
-            'blog' => $blog
+            'blog' => $blog,
+            'img' => $blog_image,
+            'user_blog' => $user_blog
         ]);
-        
     }
+
+    public function getPageBlog()
+    {
+        $blogs = Blog::find()->offset($pages->offset)->limit($pages->limit)->asArray()->all();
+
+        for ($i=1; $i < 60; $i++) { 
+            $blogs[$i] = $blogs[0];
+        }
+        $pages = new Pagination(['totalCount' => count($blogs),'pageSize' => '6']);
+        return $pages;
+    }
+
 }
