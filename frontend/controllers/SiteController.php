@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\base\InvalidParamException;
+use yii\helpers\VarDumper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -32,7 +33,7 @@ class SiteController extends Controller
                      // allow authenticated users
                     [
                         'actions' => ['signup'],
-                        'allow' => false,
+                        'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
@@ -102,7 +103,7 @@ class SiteController extends Controller
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->goHome();
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -117,9 +118,10 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        VarDumper::dump(Yii::$app->user);die();
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->redirect(['/']);
     }
 
     /**

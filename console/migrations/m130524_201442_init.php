@@ -217,25 +217,25 @@ class m130524_201442_init extends Migration
         $this->addForeignKey('FK_PRODUCTS_COLOR', 'products', 'color_id', 'colors', 'id');
         $this->addForeignKey('FK_PRODUCTS_MATERIAL', 'products', 'material_id', 'materials', 'id');
         $this->addForeignKey('FK_PRODUCTS_TAG', 'products', 'tag_id', 'tags', 'id');
-
+        
         $this->addForeignKey('FK_ORDERS_PAYMENT', 'orders', 'payment_id', 'payments', 'id');
         $this->addForeignKey('FK_ORDERS_DELIVERY', 'orders', 'delivery_id', 'deliveries', 'id');
         $this->addForeignKey('FK_ORDERS_USER', 'orders', 'user_id', 'users', 'id');
-
+        
         $this->addForeignKey('FK_ORDER_DETAILS_ORDER', 'order_details', 'order_id', 'orders', 'id');
         $this->addForeignKey('FK_ORDER_DETAILS_PRODUCT', 'order_details', 'product_id', 'products', 'id');
-
+        
         $this->addForeignKey('FK_IMAGES_PRODUCT', 'images', 'product_id', 'products', 'id');
         $this->addForeignKey('FK_IMAGES_BLOG', 'images', 'blog_id', 'blogs', 'id');
         $this->addForeignKey('FK_IMAGES_USER', 'images', 'user_id', 'users', 'id');
-
+        
         $this->addForeignKey('FK_BLOGS_USER', 'blogs', 'user_id', 'users', 'id');
         $this->addForeignKey('FK_BLOGS_TAG', 'blogs', 'tag_id', 'tags', 'id');
         $this->addForeignKey('FK_BLOGS_IMAGE', 'blogs', 'image_id', 'images', 'id');
-
+        
         $this->addForeignKey('FK_TAGS_BLOG', 'tags', 'blog_id', 'blogs', 'id');
         $this->addForeignKey('FK_BLOGS_PRODUCT', 'tags', 'product_id', 'products', 'id');
-
+        
         $this->addForeignKey('FK_COMMENTS_BLOG', 'comments', 'blog_id', 'blogs', 'id');
         $this->addForeignKey('FK_COMMENTS_USER', 'comments', 'user_id', 'users', 'id');
 
